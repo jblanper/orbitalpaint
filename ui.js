@@ -94,7 +94,7 @@ export function createControlPanel ({
 
     const initialRadiusSlider = new Slider({
         parent: div2, max: 300, min: 10, 
-        value: 220, label: 'initial formation radius',
+        value: sketchState.initialFormationRadius, label: 'initial formation radius',
         prop: 'initialFormationRadius', scope: sketchState,
         updateFn: updateFns.initialRadiusSlider
     });

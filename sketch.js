@@ -13,7 +13,7 @@ function createSketch ({ctxts}) {
 
     // variables
     let state = {
-        initialFormationRadius: 220,
+        initialFormationRadius: 140,
         particleNumber: 1000,
         atractorNumber: 2,
         color: new Color({h:0, s:0, l:0, a:.1})
