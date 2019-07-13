@@ -48,8 +48,6 @@ function createSketch ({ctxts}) {
         }
     });
 
-    atractors.setDragging();
-
     // draw background
     ctxts[0].fillStyle = '#fff';
     ctxts[0].fillRect(0, 0, width, height);
@@ -57,6 +55,18 @@ function createSketch ({ctxts}) {
     // general ctx setup
     ctxts[0].fillStyle = state.color.hsla;
     ctxts[1].fillStyle = 'red';
+
+    // initial draw for atractors
+    atractors.draw();
+
+    // hande dragging of atractors
+    const atractorsUpdate = _ => {
+        clean(ctxts[1]);
+        atractors.draw();
+        atractors.update();
+    };
+
+    atractors.setDragging(atractorsUpdate);
 
     // methods
     const clean = (ctx, drawBackground = false) => {
@@ -70,7 +80,6 @@ function createSketch ({ctxts}) {
     };
 
     const draw = _ => {
-        atractors.draw();
         particles.draw();
     };
     
@@ -82,12 +91,9 @@ function createSketch ({ctxts}) {
                 });
             }
         });
-
-        atractors.update();
     };
 
     const animation = setAnimation(_ => {
-        clean(ctxts[1]);
         draw();
         update();
     }, 0);
@@ -132,6 +138,11 @@ function createSketch ({ctxts}) {
                 );
 
                 atractors.setup();
+                atractorsUpdate();
+            },
+            atractorsUpdate: _ => {
+                atractors.setup();
+                atractorsUpdate();
             },
             particleNumberSlider: _ => {
                 resetParticles();

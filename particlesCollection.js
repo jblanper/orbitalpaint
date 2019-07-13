@@ -72,18 +72,21 @@ export default class ParticlesCollection {
     }
 
     // drag functionality
-    setDragging () {
+    setDragging (updateFn = null) {
         this.ctx.canvas.addEventListener('touchstart', e => {
             e.preventDefault();
             const touch = e.touches[0];
             this.particles.forEach(p => p.handleClick(touch.pageX, touch.pageY, true));
-
         });
 
         this.ctx.canvas.addEventListener('touchmove', e => {
             e.preventDefault();
             const touch = e.touches[0];
-            this.particles.forEach(p => p.handleDrag(touch.pageX, touch.pageY));
+
+            this.particles.forEach(p => {
+                dragging = p.handleDrag(touch.pageX, touch.pageY);
+                if (updateFn && p.dragging) updateFn();
+            });
         });
 
         this.ctx.canvas.addEventListener('touchend', e => {
@@ -98,7 +101,11 @@ export default class ParticlesCollection {
         });
 
         this.ctx.canvas.addEventListener('mousemove', e => {
-            this.particles.forEach(p => p.handleDrag(e.clientX, e.clientY));
+            this.particles.forEach(p => {
+                p.handleDrag(e.clientX, e.clientY)
+                if (updateFn && p.dragging) updateFn();
+            });
+
         });
 
         this.ctx.canvas.addEventListener('mouseup', e => {
