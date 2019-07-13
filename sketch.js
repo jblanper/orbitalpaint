@@ -104,7 +104,7 @@ function createSketch ({ctxts}) {
 
     // bindings
     document.addEventListener('keyup', e => {
-        if (e.key == ' ') animation.toggle();
+        if (e.key == 's') animation.toggle();
         if (e.key == 'e') clean(ctxts[0], true);
         if (e.key == 'r') {
             resetParticles();
