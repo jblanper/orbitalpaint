@@ -84,7 +84,7 @@ export default class ParticlesCollection {
             const touch = e.touches[0];
 
             this.particles.forEach(p => {
-                dragging = p.handleDrag(touch.pageX, touch.pageY);
+                p.handleDrag(touch.pageX, touch.pageY);
                 if (updateFn && p.dragging) updateFn();
             });
         });

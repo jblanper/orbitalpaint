@@ -38,9 +38,11 @@ function createSketch ({ctxts}) {
             ctx: ctxts[1],
             radius: [5],
             position: Array.from({length: state.atractorNumber}, _ => {
+                const maxWidth = (width < 250) ? width - 20 : 250;
+                const maxHeight = (height < 250) ? height - 20 : 250;
                 return new Vector(
-                    getRandomNum(origin.x - 250, origin.x + 250),
-                    getRandomNum(origin.y - 250, origin.y + 250),
+                    getRandomNum(origin.x - maxWidth, origin.x + maxWidth),
+                    getRandomNum(origin.y - maxHeight, origin.y + maxHeight),
                 );
             }),
             G: 5, minDistance: [15], maxDistance: [25],
