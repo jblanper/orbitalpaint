@@ -47,26 +47,26 @@ export function createControlPanel ({
 
     const atractorNumberSlider = new Slider({
         parent: div1, max: 8, min: 1, value: atractors.particleNumber,
-        label: 'atractors # ', prop: 'particleNumber', scope: atractors,
+        label: 'attractors # ', prop: 'particleNumber', scope: atractors,
         updateFn: updateFns.atractorNumberSlider
     });
 
     const gSlider = new Slider({
         parent: div1, max: 60, min: 1, value: atractors.particleOptions.G,
-        label: 'atracton force strength', prop: 'G', scope: atractors.particleOptions,
+        label: 'attracton force strength', prop: 'G', scope: atractors.particleOptions,
         updateFn: updateFns.atractorsUpdate
     });
 
     const minDistanceSlider = new Slider({
         parent: div1, max: 70, min: 1, value: atractors.particleOptions.minDistance,
-        label: 'atraction force min. distance', prop: 'minDistance',
+        label: 'attraction force min. distance', prop: 'minDistance',
         scope: atractors.particleOptions,
         updateFn: updateFns.atractorsUpdate
     });
 
     const maxDistanceSlider = new Slider({
         parent: div1, max: 100, min: 10, value: atractors.particleOptions.maxDistance,
-        label: 'atraction force max. distance', prop: 'maxDistance',
+        label: 'attraction force max. distance', prop: 'maxDistance',
         scope: atractors.particleOptions,
         updateFn: updateFns.atractorsUpdate
     });
