@@ -38,8 +38,8 @@ function createSketch ({ctxts}) {
             ctx: ctxts[1],
             radius: [5],
             position: Array.from({length: state.atractorNumber}, _ => {
-                const maxWidth = (width < 250) ? width - 20 : 250;
-                const maxHeight = (height < 250) ? height - 20 : 250;
+                const maxWidth = (width < 270) ? width - 20 : 250;
+                const maxHeight = (height < 270) ? height - 20 : 250;
                 return new Vector(
                     getRandomNum(origin.x - maxWidth, origin.x + maxWidth),
                     getRandomNum(origin.y - maxHeight, origin.y + maxHeight),
@@ -131,10 +131,13 @@ function createSketch ({ctxts}) {
         updateFns: {
             atractorNumberSlider: _ => {
                 atractors.particleOptions.position = Array.from(
-                    {length: atractors.particleNumber}, _ => {
+                    {length: atractors.particleNumber},
+                    _ => {
+                        const maxWidth = (width < 270) ? width - 20 : 250;
+                        const maxHeight = (height < 270) ? height - 20 : 250;
                         return new Vector(
-                            getRandomNum(origin.x - 350, origin.x + 350),
-                            getRandomNum(origin.y - 350, origin.y + 350),
+                            getRandomNum(origin.x - maxWidth, origin.x + maxWidth),
+                            getRandomNum(origin.y - maxHeight, origin.y + maxHeight),
                         );
                     }
                 );
