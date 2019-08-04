@@ -16,7 +16,8 @@ function createSketch ({ctxts}) {
         initialFormationRadius: 140,
         particleNumber: 1000,
         atractorNumber: 2,
-        color: new Color({h:0, s:0, l:0, a:.1})
+        color: new Color({h:0, s:100, l:100, a:.1}),
+        backgroundColor: 'black'
     };
 
     let particles = new ParticlesCollection({
@@ -51,7 +52,7 @@ function createSketch ({ctxts}) {
     });
 
     // draw background
-    ctxts[0].fillStyle = '#fff';
+    ctxts[0].fillStyle = state.backgroundColor;
     ctxts[0].fillRect(0, 0, width, height);
 
     // general ctx setup
@@ -73,7 +74,7 @@ function createSketch ({ctxts}) {
     // methods
     const clean = (ctx, drawBackground = false) => {
         if (drawBackground) {
-            ctx.fillStyle = '#fff';
+            ctx.fillStyle = state.backgroundColor;
             ctx.fillRect(0, 0, width, height);
             ctx.fillStyle = state.color.hsla;
         } else {
@@ -164,6 +165,24 @@ function createSketch ({ctxts}) {
         saveImgFn: _ => {
             if (animation.animating) animation.stop();
             getPng(ctxts[0].canvas);
+        },
+        restartFn: _ => {
+            resetParticles();
+            atractors.setup();
+        },
+        invertFn: _ => {
+            if (state.backgroundColor === 'black') {
+                state.backgroundColor = 'white';
+                state.color.s = 0;
+                state.color.l = 0;
+            } else {
+                state.backgroundColor = 'black';
+                state.color.s = 100;
+                state.color.l = 100;
+            }
+
+            resetParticles();
+            atractors.setup();
         }
     });
 

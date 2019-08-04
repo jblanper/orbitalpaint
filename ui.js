@@ -22,7 +22,7 @@ function setRandomSliderValue (slider, min = slider.min, max = slider.max) {
 }
 
 export function createControlPanel ({
-    eraseFn, animationToggleFn, saveImgFn,
+    eraseFn, animationToggleFn, saveImgFn, restartFn, invertFn,
     atractors, particles, sketchState, updateFns
 }) {
     const buttonsDiv = document.querySelector('#buttons');
@@ -32,11 +32,21 @@ export function createControlPanel ({
         title: 'erase', id: 'erase'
     });
 
+    const restart = new Button({
+        parent: buttonsDiv, fn: restartFn, updateFn: null, label: icons.restart,
+        title: 'restart', id: 'restart'
+    }); 
+
     const toggleAnimation = new ToggleButton({
         parent: buttonsDiv, prop: 'toggle-animation-btn', value: true,
         labelTrue: icons.pause, labelFalse: icons.play,
         updateFn: animationToggleFn, title: 'play/pause'
     });
+
+    const invert = new Button({
+        parent: buttonsDiv, fn: invertFn, updateFn: null, label: icons.yingYang,
+        title: 'invert colors', id: 'invert-colors'
+    }); 
 
     const saveImg = new Button({
         parent: buttonsDiv, fn: saveImgFn, updateFn: null, label: icons.saveImg,
@@ -115,7 +125,7 @@ export function createControlPanel ({
     });
 
     return {
-        erase, toggleAnimation, saveImg,
+        erase, toggleAnimation, saveImg, restart, invert,
         atractorNumberSlider, gSlider, minDistanceSlider, maxDistanceSlider,
         particleNumberSlider, radiusSlider, alphaSlider, initialRadiusSlider
     };
