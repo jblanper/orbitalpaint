@@ -11,10 +11,19 @@ function createSketch ({ctxts}) {
     const width = ctxts[0].canvas.clientWidth;
     const origin = new Vector(width / 2, height / 2); 
 
+    const getRandomPosition = _ => {
+        const halfWidth = (width > 270) ? (width / 2) - 50 : 250;
+        const halfHeight = (height > 270) ? (height / 2) - 50 : 250;
+        return new Vector(
+            getRandomNum(origin.x - halfWidth, origin.x + halfWidth),
+            getRandomNum(origin.y - halfHeight, origin.y + halfHeight),
+        );
+    };
+
     // variables
     let state = {
         initialFormationRadius: 140,
-        particleNumber: 1000,
+        particleNumber: 800,
         atractorNumber: 2,
         color: new Color({h:0, s:100, l:100, a:.1}),
         backgroundColor: 'black'
@@ -26,9 +35,7 @@ function createSketch ({ctxts}) {
             ctx: ctxts[0],
             radius: [.25],
             position: getRingPoints(state.particleNumber, state.initialFormationRadius)
-                .map(v =>
-                    v.add(origin)
-                ),
+                .map(v => v.add(origin)),
             damping: [.998] // 1 = no damping
         }
     });
@@ -38,14 +45,7 @@ function createSketch ({ctxts}) {
         particleOptions: {
             ctx: ctxts[1],
             radius: [5],
-            position: Array.from({length: state.atractorNumber}, _ => {
-                const maxWidth = (width < 270) ? width - 20 : 250;
-                const maxHeight = (height < 270) ? height - 20 : 250;
-                return new Vector(
-                    getRandomNum(origin.x - maxWidth, origin.x + maxWidth),
-                    getRandomNum(origin.y - maxHeight, origin.y + maxHeight),
-                );
-            }),
+            position: Array.from({length: state.atractorNumber}, getRandomPosition),
             G: 5, minDistance: [15], maxDistance: [25],
             damping: [.9998]
         }
@@ -132,15 +132,7 @@ function createSketch ({ctxts}) {
         updateFns: {
             atractorNumberSlider: _ => {
                 atractors.particleOptions.position = Array.from(
-                    {length: atractors.particleNumber},
-                    _ => {
-                        const maxWidth = (width < 270) ? width - 20 : 250;
-                        const maxHeight = (height < 270) ? height - 20 : 250;
-                        return new Vector(
-                            getRandomNum(origin.x - maxWidth, origin.x + maxWidth),
-                            getRandomNum(origin.y - maxHeight, origin.y + maxHeight),
-                        );
-                    }
+                    {length: atractors.particleNumber}, getRandomPosition
                 );
 
                 atractors.setup();
